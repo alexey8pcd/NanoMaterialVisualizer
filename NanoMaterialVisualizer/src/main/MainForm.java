@@ -1,11 +1,22 @@
 package main;
 
+import java.io.File;
+import javax.swing.JOptionPane;
+
 /**
  * @author Алексей
  */
 public class MainForm extends javax.swing.JFrame {
 
-    private Render render;
+    private final Render render;
+    private int mouseX;
+    private int mouseY;
+    private final String[] sources = {
+        "nanotube.txt",
+        "fulleren.txt",
+        "graphen.txt",
+        "nanocrystal.txt"
+    };
 
     public MainForm() {
         initComponents();
@@ -40,6 +51,19 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         paneDraw.setBackground(new java.awt.Color(0, 0, 0));
+        paneDraw.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
+            public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
+                paneDrawMouseWheelMoved(evt);
+            }
+        });
+        paneDraw.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                paneDrawMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                paneDrawMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout paneDrawLayout = new javax.swing.GroupLayout(paneDraw);
         paneDraw.setLayout(paneDrawLayout);
@@ -82,9 +106,45 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bVisualizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVisualizeActionPerformed
-        int index = listMaterials.getSelectedIndex();
-        render.visualize(index);
+        File source = loadSource();
+        if (source != null) {
+            try {
+                render.display(source);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, ex.toString());
+            }
+        }
     }//GEN-LAST:event_bVisualizeActionPerformed
+
+    private File loadSource() {
+        int index = listMaterials.getSelectedIndex();
+        if (index < 0) {
+            return null;
+        }
+        String source = sources[index];
+        try {
+            File sourceFile = new File(source);
+            return sourceFile;
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.toString());
+            return null;
+        }
+    }
+
+    private void paneDrawMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneDrawMousePressed
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_paneDrawMousePressed
+
+    private void paneDrawMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneDrawMouseReleased
+        int dy = evt.getX() - mouseX;
+        int dx = evt.getY() - mouseY;
+        render.rotate(dx, dy);
+    }//GEN-LAST:event_paneDrawMouseReleased
+
+    private void paneDrawMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_paneDrawMouseWheelMoved
+        render.scale(evt.getWheelRotation());
+    }//GEN-LAST:event_paneDrawMouseWheelMoved
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

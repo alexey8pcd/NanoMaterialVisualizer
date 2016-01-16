@@ -44,16 +44,24 @@ public class Render {
         update();
     }
 
-    private void update() {        
-        shape.draw(buffer.getGraphics(), width, heigth);        
+    private void update() {
+        shape.draw(buffer.getGraphics(), width, heigth);
         graphics.drawImage(buffer, 0, 0, null);
     }
 
     public void rotate(double dx, double dy) {
-        dx /= width;
-        dy /= heigth;
-        shape.rotate(dx, dy);
-        update();
+        if (shape != null) {
+            if (Math.abs(dx) > width) {
+                dx = width * Math.signum(dx);
+            }
+            if (Math.abs(dy) > heigth) {
+                dy = heigth * Math.signum(dy);
+            }
+            dx /= width;
+            dy /= heigth;
+            shape.rotate(dx, dy);
+            update();
+        }
     }
 
     public void scale(double value) {

@@ -29,9 +29,17 @@ public class Shape {
         }
     }
 
+    /**
+     *
+     * @param dx [-1.0; 1.0]
+     * @param dy [-1.0; 1.0]
+     */
     public void rotate(double dx, double dy) {
-        float[][] matrixX = makeRotateMatrixX(dx);
-        float[][] matrixY = makeRotateMatrixY(dy);
+        double t = dx + Math.signum(dx);
+        dx = dy + Math.signum(dy);
+        dy = t;
+        float[][] matrixX = makeRotateMatrixX(dx * dx * dx);
+        float[][] matrixY = makeRotateMatrixY(dy * dy * dy);
         for (Hexagone hexagone : hexagones) {
             hexagone.multiOnMatrix(matrixX);
             hexagone.multiOnMatrix(matrixY);
@@ -47,16 +55,19 @@ public class Shape {
 
     private float[][] makeIdentityMatrix() {
         return new float[][]{
-            {1, 0, 0, 0}, {0, 1, 0, 0},
-            {0, 0, 1, 0}, {0, 0, 0, 1}
+            {1, 0, 0, 0},
+            {0, 1, 0, 0},
+            {0, 0, 1, 0},
+            {0, 0, 0, 1}
         };
     }
 
     private float[][] makeRotateMatrixX(double dx) {
         float[][] matrix = makeIdentityMatrix();
-        double angleX = Math.PI / 4 * dx;
+        double angleX = Math.PI / 180 * dx;
         matrix[1][1] = matrix[2][2] = (float) Math.cos(angleX);
-        matrix[2][1] = matrix[1][2] = (float) Math.sin(angleX);
+        matrix[1][2] = (float) Math.sin(angleX);
+        matrix[2][1] = -matrix[1][2];
         return matrix;
     }
 
@@ -72,9 +83,10 @@ public class Shape {
 
     private float[][] makeRotateMatrixY(double dy) {
         float[][] matrix = makeIdentityMatrix();
-        double angleX = Math.PI / 4 * dy;
+        double angleX = Math.PI / 180 * dy;
         matrix[0][0] = matrix[2][2] = (float) Math.cos(angleX);
-        matrix[2][0] = matrix[0][2] = (float) Math.sin(angleX);
+        matrix[0][2] = (float) Math.sin(angleX);
+        matrix[2][0] = -matrix[0][2];
         return matrix;
     }
 

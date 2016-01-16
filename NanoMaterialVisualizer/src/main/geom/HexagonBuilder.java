@@ -11,7 +11,7 @@ public abstract class HexagonBuilder {
      * @return
      */
     public static final Hexagone create(String coordinatesLine) {
-        String[] points = coordinatesLine.split(",");
+        String[] points = coordinatesLine.replace("[", "").replace("]", "").split(",");
         Hexagone hexagone = new Hexagone();
         for (int i = 0; i < Hexagone.EDGE_COUNT; i++) {
             hexagone.setVertex(createVertex(points[i]), i);

@@ -16,7 +16,10 @@ public class ShapeLoader {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile))) {
             shape = new Shape();
             while (bufferedReader.ready()) {
-                shape.addHexagone(HexagonBuilder.create(bufferedReader.readLine()));
+                String line = bufferedReader.readLine();
+                if (!line.startsWith("--")) {
+                    shape.addHexagone(HexagonBuilder.create(line));
+                }
             }
         }
         return shape;

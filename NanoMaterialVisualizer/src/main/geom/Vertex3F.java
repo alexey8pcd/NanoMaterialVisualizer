@@ -9,38 +9,47 @@ class Vertex3F {
     private float y;
     private float z;
 
-    public Vertex3F(float x, float y, float z) {
+    Vertex3F(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    public float getX() {
+    Vertex3F(double x, double y, double z) {
+        this.x = (float) x;
+        this.y = (float) y;
+        this.z = (float) z;
+    }
+
+    float getX() {
         return x;
     }
 
-    public float getY() {
+    float getY() {
         return y;
     }
 
-    public float getZ() {
+    float getZ() {
         return z;
     }
 
     void multiOnMatrix(float[][] matrix) {
-        float xn = 0;
-        float yn = 0;
-        float zn = 0;
-        float dn = 0;
-        for (float[] matrix1 : matrix) {
-            xn += x * matrix1[0];
-            yn += y * matrix1[1];
-            zn += z * matrix1[2];
-            dn += matrix1[3];
-        }
+        float xn = x * matrix[0][0] + y * matrix[1][0]
+                + z * matrix[2][0] + matrix[3][0];
+        float yn = x * matrix[0][1] + y * matrix[1][1]
+                + z * matrix[2][1] + matrix[3][1];
+        float zn = x * matrix[0][2] + y * matrix[1][2]
+                + z * matrix[2][2] + matrix[3][2];
+        float dn = x * matrix[0][3] + y * matrix[1][3]
+                + z * matrix[2][3] + matrix[3][3];
         x = xn / dn;
         y = yn / dn;
         z = zn / dn;
+    }
+
+    @Override
+    public String toString() {
+        return x + ";" + y + ";" + z;
     }
 
 }

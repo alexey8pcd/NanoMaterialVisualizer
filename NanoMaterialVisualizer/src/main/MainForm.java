@@ -20,6 +20,7 @@ public class MainForm extends javax.swing.JFrame {
 
     public MainForm() {
         initComponents();
+        listMaterials.setSelectedIndex(0);
         render = new Render(paneDraw.getGraphics(), paneDraw.getWidth(),
                 paneDraw.getHeight());
         render.loadImages();
@@ -51,6 +52,11 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         paneDraw.setBackground(new java.awt.Color(0, 0, 0));
+        paneDraw.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                paneDrawMouseDragged(evt);
+            }
+        });
         paneDraw.addMouseWheelListener(new java.awt.event.MouseWheelListener() {
             public void mouseWheelMoved(java.awt.event.MouseWheelEvent evt) {
                 paneDrawMouseWheelMoved(evt);
@@ -59,9 +65,6 @@ public class MainForm extends javax.swing.JFrame {
         paneDraw.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 paneDrawMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                paneDrawMouseReleased(evt);
             }
         });
 
@@ -96,8 +99,8 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(paneDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 419, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(bVisualize, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -110,6 +113,7 @@ public class MainForm extends javax.swing.JFrame {
         if (source != null) {
             try {
                 render.display(source);
+                render.rotate(-400, 0);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ex.toString());
             }
@@ -131,20 +135,22 @@ public class MainForm extends javax.swing.JFrame {
         }
     }
 
+    private void paneDrawMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_paneDrawMouseWheelMoved
+        render.scale(evt.getWheelRotation());
+    }//GEN-LAST:event_paneDrawMouseWheelMoved
+
+    private void paneDrawMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneDrawMouseDragged
+        int dx = evt.getX() - mouseX;
+        int dy = evt.getY() - mouseY;
+        render.rotate(dx, dy);
+        mouseX = evt.getX();
+        mouseY = evt.getY();
+    }//GEN-LAST:event_paneDrawMouseDragged
+
     private void paneDrawMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneDrawMousePressed
         mouseX = evt.getX();
         mouseY = evt.getY();
     }//GEN-LAST:event_paneDrawMousePressed
-
-    private void paneDrawMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneDrawMouseReleased
-        int dy = evt.getX() - mouseX;
-        int dx = evt.getY() - mouseY;
-        render.rotate(dx, dy);
-    }//GEN-LAST:event_paneDrawMouseReleased
-
-    private void paneDrawMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_paneDrawMouseWheelMoved
-        render.scale(evt.getWheelRotation());
-    }//GEN-LAST:event_paneDrawMouseWheelMoved
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

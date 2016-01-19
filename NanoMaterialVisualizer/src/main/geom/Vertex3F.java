@@ -3,37 +3,37 @@ package main.geom;
 /**
  * @author Alexey
  */
-class Vertex3F {
+public class Vertex3F {
 
     private float x;
     private float y;
     private float z;
 
-    Vertex3F(float x, float y, float z) {
+    public Vertex3F(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
     }
 
-    Vertex3F(double x, double y, double z) {
+    public Vertex3F(double x, double y, double z) {
         this.x = (float) x;
         this.y = (float) y;
         this.z = (float) z;
     }
 
-    float getX() {
+    public float getX() {
         return x;
     }
 
-    float getY() {
+    public float getY() {
         return y;
     }
 
-    float getZ() {
+    public float getZ() {
         return z;
     }
 
-    void multiOnMatrix(float[][] matrix) {
+    public void multiOnMatrix(float[][] matrix) {
         float xn = x * matrix[0][0] + y * matrix[1][0]
                 + z * matrix[2][0] + matrix[3][0];
         float yn = x * matrix[0][1] + y * matrix[1][1]

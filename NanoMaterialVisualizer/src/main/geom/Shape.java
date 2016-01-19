@@ -64,7 +64,7 @@ public class Shape {
 
     private float[][] makeRotateMatrixX(double dx) {
         float[][] matrix = makeIdentityMatrix();
-        double angleX = Math.PI / 180 * dx;
+        double angleX = Math.PI / 720 * dx;
         matrix[1][1] = matrix[2][2] = (float) Math.cos(angleX);
         matrix[1][2] = (float) Math.sin(angleX);
         matrix[2][1] = -matrix[1][2];
@@ -83,7 +83,7 @@ public class Shape {
 
     private float[][] makeRotateMatrixY(double dy) {
         float[][] matrix = makeIdentityMatrix();
-        double angleX = Math.PI / 180 * dy;
+        double angleX = Math.PI / 720 * dy;
         matrix[0][0] = matrix[2][2] = (float) Math.cos(angleX);
         matrix[0][2] = (float) Math.sin(angleX);
         matrix[2][0] = -matrix[0][2];

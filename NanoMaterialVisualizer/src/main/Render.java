@@ -57,8 +57,8 @@ public class Render {
             if (Math.abs(dy) > heigth) {
                 dy = heigth * Math.signum(dy);
             }
-            dx /= width;
-            dy /= heigth;
+            dx /= 2 * width;
+            dy /= 2 * heigth;
             shape.rotate(dx, dy);
             update();
         }

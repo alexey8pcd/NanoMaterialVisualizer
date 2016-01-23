@@ -52,4 +52,11 @@ public class Vertex3F {
         return x + ";" + y + ";" + z;
     }
 
+    public double distanceTo(Vertex3F other) {
+        float dx = this.x - other.x;
+        float dy = this.y - other.y;
+        float dz = this.z - other.z;
+        return dx * dx + dy * dy + dz * dz;
+    }
+
 }

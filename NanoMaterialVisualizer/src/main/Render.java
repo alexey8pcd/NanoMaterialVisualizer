@@ -1,12 +1,9 @@
 package main;
 
-import java.awt.Color;
-import main.geom.Shape;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
+import main.geom.shapes.Shape;
+import main.geom.shapes.ShapeType;
 
 /**
  * @author Alexey
@@ -15,7 +12,6 @@ public class Render {
 
     private final BufferedImage buffer;
     private final Graphics graphics;
-    private BufferedImage[] materials;
     private final int width;
     private final int heigth;
     private Shape shape;
@@ -27,20 +23,8 @@ public class Render {
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
-    public void loadImages() {
-        try {
-            materials = new BufferedImage[4];
-            materials[0] = ImageIO.read(new File("images/Nanotube.jpg"));
-            materials[1] = ImageIO.read(new File("images/fulleren.jpg"));
-            materials[2] = ImageIO.read(new File("images/graphen.gif"));
-            materials[3] = ImageIO.read(new File("images/crystal.jpg"));
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage());
-        }
-    }
-
-    public void display(File sourceFile) throws Exception {
-        shape = ShapeLoader.load(sourceFile);
+    public void display(ShapeType shapeType) throws Exception {
+        shape = ShapeLoader.loadShape(shapeType);
         update();
     }
 
@@ -67,12 +51,6 @@ public class Render {
     public void scale(double value) {
         shape.scale(value);
         update();
-    }
-
-    public void visualize(int index) {
-        if (index >= 0 || index < 4) {
-            graphics.drawImage(materials[index], 0, 0, width, heigth, null);
-        }
     }
 
 }

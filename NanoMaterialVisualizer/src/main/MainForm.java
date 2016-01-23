@@ -1,7 +1,7 @@
 package main;
 
-import java.io.File;
 import javax.swing.JOptionPane;
+import main.geom.shapes.ShapeType;
 
 /**
  * @author Алексей
@@ -11,19 +11,12 @@ public class MainForm extends javax.swing.JFrame {
     private final Render render;
     private int mouseX;
     private int mouseY;
-    private final String[] sources = {
-        "nanotube.txt",
-        "fulleren.txt",
-        "graphen.txt",
-        "nanocrystal.txt"
-    };
 
     public MainForm() {
         initComponents();
         listMaterials.setSelectedIndex(0);
         render = new Render(paneDraw.getGraphics(), paneDraw.getWidth(),
                 paneDraw.getHeight());
-        render.loadImages();
     }
 
     @SuppressWarnings("unchecked")
@@ -109,31 +102,14 @@ public class MainForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bVisualizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVisualizeActionPerformed
-        File source = loadSource();
-        if (source != null) {
-            try {
-                render.display(source);
-                render.rotate(-400, 0);
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null, ex.toString());
-            }
-        }
-    }//GEN-LAST:event_bVisualizeActionPerformed
-
-    private File loadSource() {
-        int index = listMaterials.getSelectedIndex();
-        if (index < 0) {
-            return null;
-        }
-        String source = sources[index];
         try {
-            File sourceFile = new File(source);
-            return sourceFile;
+            render.display(ShapeType.getBy(listMaterials.getSelectedIndex()));
+            render.rotate(-400, 0);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
-            return null;
         }
-    }
+
+    }//GEN-LAST:event_bVisualizeActionPerformed
 
     private void paneDrawMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_paneDrawMouseWheelMoved
         render.scale(evt.getWheelRotation());

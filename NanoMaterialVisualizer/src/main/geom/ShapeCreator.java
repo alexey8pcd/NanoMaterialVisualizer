@@ -1,6 +1,5 @@
 package main.geom;
 
-import main.geom.creators.FullerenCreator;
 import main.geom.creators.GraphenCreator;
 import main.geom.creators.NanocrystalCreator;
 import main.geom.creators.NanotubeCreator;
@@ -23,7 +22,7 @@ public class ShapeCreator {
     }
 
     public void createFulleren() {
-        new FullerenCreator().create();
+
     }
 
     public void createNanocrystal() {
@@ -33,8 +32,7 @@ public class ShapeCreator {
     public static void main(String[] args) {
         ShapeCreator shapeCreator = new ShapeCreator();
         shapeCreator.createNanotube();
-        shapeCreator.createGraphen();
-        shapeCreator.createFulleren();
-        shapeCreator.createNanocrystal();
+//        shapeCreator.createGraphen();
+//        shapeCreator.createNanocrystal();
     }
 }

@@ -5,27 +5,35 @@ import java.awt.Graphics;
 /**
  * @author Alexey
  */
-public class Hexagone {
+public class Primitive3D implements GeometricPrimitive {
 
-    private final Vertex3F[] vertexes;
-    static final int EDGE_COUNT = 6;
+    protected final int edgeCount;
+    protected final int vertexesCount;
+    protected final Vertex3F[] vertexes;
 
-    public Hexagone() {
-        vertexes = new Vertex3F[EDGE_COUNT];
+    public static boolean inField(float x, float y, int width, int height) {
+        return x >= 0 && x < width && y >= 0 && y < height;
     }
 
-    void setVertex(Vertex3F vertex, int index) {
+    public Primitive3D(int edgeCount, int vertexesCount) {
+        this.edgeCount = edgeCount;
+        this.vertexesCount = vertexesCount;
+        vertexes = new Vertex3F[vertexesCount];
+    }
+
+    public void setVertex(Vertex3F vertex, int index) {
         vertexes[index] = vertex;
     }
 
+    @Override
     public void draw(Graphics graphics, int width, int height) {
-        for (int i = 0; i < EDGE_COUNT - 1; i++) {
+        for (int i = 0; i < vertexesCount - 1; i++) {
             drawEdge(i, i + 1, graphics, width, height);
         }
-        drawEdge(EDGE_COUNT - 1, 0, graphics, width, height);
+        drawEdge(vertexesCount - 1, 0, graphics, width, height);
     }
 
-    private void drawEdge(int index1, int index2, Graphics graphics, int width, int height) {
+    protected void drawEdge(int index1, int index2, Graphics graphics, int width, int height) {
         Vertex3F vertex1 = vertexes[index1];
         Vertex3F vertex2 = vertexes[index2];
         int dx = width / 4;
@@ -39,13 +47,11 @@ public class Hexagone {
         }
     }
 
-    private static boolean inField(float x, float y, int width, int height) {
-        return x >= 0 && x < width && y >= 0 && y < height;
-    }
-
+    @Override
     public void multiOnMatrix(float[][] matrix) {
         for (Vertex3F vertex3F : vertexes) {
             vertex3F.multiOnMatrix(matrix);
         }
     }
+
 }

@@ -1,6 +1,9 @@
 package main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 import main.geom.shapes.ShapeType;
 
 /**
@@ -104,7 +107,9 @@ public class MainForm extends javax.swing.JFrame {
     private void bVisualizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVisualizeActionPerformed
         try {
             render.display(ShapeType.getBy(listMaterials.getSelectedIndex()));
-            render.rotate(-400, 0);
+            new Timer(25, (ActionEvent e) -> {
+                render.rotate(Integer.MIN_VALUE, 0);
+            }).start();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
@@ -112,7 +117,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_bVisualizeActionPerformed
 
     private void paneDrawMouseWheelMoved(java.awt.event.MouseWheelEvent evt) {//GEN-FIRST:event_paneDrawMouseWheelMoved
-        render.scale(evt.getWheelRotation());
+        render.scale(-evt.getWheelRotation());
     }//GEN-LAST:event_paneDrawMouseWheelMoved
 
     private void paneDrawMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_paneDrawMouseDragged
@@ -129,10 +134,6 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_paneDrawMousePressed
 
     public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -140,14 +141,9 @@ public class MainForm extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(MainForm.class.getName()).
+                    log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         java.awt.EventQueue.invokeLater(new Runnable() {

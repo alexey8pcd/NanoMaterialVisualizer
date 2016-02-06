@@ -9,11 +9,11 @@ import java.util.List;
 /**
  * @author Alexey
  */
-public class Nanotube implements Shape {
+public class HexagoneShape implements Shape {
 
     private final List<GeometricPrimitive> hexagones;
 
-    public Nanotube() {
+    public HexagoneShape() {
         hexagones = new ArrayList<>();
     }
 

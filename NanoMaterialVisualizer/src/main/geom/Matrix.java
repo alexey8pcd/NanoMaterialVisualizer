@@ -26,7 +26,7 @@ public class Matrix {
     public static float[][] makeScaleMatrix(double value) {
         float[][] matrix = makeIdentityMatrix();
         float factor = 1.2f;
-        if (value > 0) {
+        if (value < 0) {
             factor = 0.8f;
         }
         matrix[0][0] = matrix[1][1] = matrix[2][2] = factor;

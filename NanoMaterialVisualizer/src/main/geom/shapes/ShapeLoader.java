@@ -1,12 +1,14 @@
-package main;
+package main.geom.shapes;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import main.geom.PrimitiveBuilder;
 import main.geom.Vertex3F;
 import main.geom.shapes.Fulleren;
-import main.geom.shapes.Nanotube;
+import main.geom.shapes.HexagoneShape;
 import main.geom.shapes.Shape;
 import main.geom.shapes.ShapeType;
 
@@ -27,20 +29,20 @@ public class ShapeLoader {
         switch (shapeType) {
             case NANOTUBE:
                 return loadNanotube(new File(SOURCES[0]));
-            case GRAPHEN:
-                break;
             case FULLEREN:
                 return loadFulleren(new File(SOURCES[1]));
+            case GRAPHEN:
+                return loadGraphen(new File(SOURCES[2]));
             case NANOCRYSTAL:
                 break;
         }
         return null;
     }
 
-    private static Nanotube loadNanotube(File sourceFile) throws Exception {
-        Nanotube nanotube;
+    private static HexagoneShape loadNanotube(File sourceFile) throws Exception {
+        HexagoneShape nanotube;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile))) {
-            nanotube = new Nanotube();
+            nanotube = new HexagoneShape();
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
                 if (!line.startsWith(COMMENT_PREFIX)) {
@@ -63,6 +65,9 @@ public class ShapeLoader {
             }
         }
         fulleren.build();
+        for (int i = 0; i < 15; i++) {
+            fulleren.scale(Integer.MAX_VALUE);
+        }
         return fulleren;
     }
 
@@ -73,6 +78,20 @@ public class ShapeLoader {
         float z = Float.parseFloat(coordinates[2]);
         Vertex3F vertex3F = new Vertex3F(x, y, z);
         return vertex3F;
+    }
+
+    private static Shape loadGraphen(File sourceFile) throws IOException {
+        HexagoneShape graphen;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile))) {
+            graphen = new HexagoneShape();
+            while (bufferedReader.ready()) {
+                String line = bufferedReader.readLine();
+                if (!line.startsWith(COMMENT_PREFIX)) {
+                    graphen.addHexagone(PrimitiveBuilder.createHexagone(line));
+                }
+            }
+        }
+        return graphen;
     }
 
 }

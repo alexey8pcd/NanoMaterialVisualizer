@@ -1,4 +1,4 @@
-package main.geom;
+package main.geom.creators;
 
 import main.geom.creators.GraphenCreator;
 import main.geom.creators.NanocrystalCreator;
@@ -31,8 +31,8 @@ public class ShapeCreator {
 
     public static void main(String[] args) {
         ShapeCreator shapeCreator = new ShapeCreator();
-        shapeCreator.createNanotube();
-//        shapeCreator.createGraphen();
+//        shapeCreator.createNanotube();
+        shapeCreator.createGraphen();
 //        shapeCreator.createNanocrystal();
     }
 }

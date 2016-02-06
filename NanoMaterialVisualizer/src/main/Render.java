@@ -1,5 +1,6 @@
 package main;
 
+import main.geom.shapes.ShapeLoader;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import main.geom.shapes.Shape;

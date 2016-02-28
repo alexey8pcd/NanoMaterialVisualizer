@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import main.geom.shapes.ShapeType;
@@ -11,9 +10,14 @@ import main.geom.shapes.ShapeType;
  */
 public class MainForm extends javax.swing.JFrame {
 
-    private final Render render;
+    private Render render;
     private int mouseX;
     private int mouseY;
+    private Timer timer = new Timer(25, (ActionEvent e) -> {
+        if (render != null) {
+            render.rotate(Integer.MIN_VALUE, 0);
+        }
+    });
 
     public MainForm() {
         initComponents();
@@ -25,11 +29,18 @@ public class MainForm extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jScrollPane1 = new javax.swing.JScrollPane();
         listMaterials = new javax.swing.JList();
         bVisualize = new javax.swing.JButton();
         paneDraw = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        bYDec = new javax.swing.JButton();
+        bXDec = new javax.swing.JButton();
+        bYInc = new javax.swing.JButton();
+        bXInc = new javax.swing.JButton();
+        bReset = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,16 +86,80 @@ public class MainForm extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
+        jPanel1.setPreferredSize(new java.awt.Dimension(140, 140));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        bYDec.setText("y-");
+        bYDec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bYDecActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        jPanel1.add(bYDec, gridBagConstraints);
+
+        bXDec.setText("x-");
+        bXDec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bXDecActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(bXDec, gridBagConstraints);
+
+        bYInc.setText("y+");
+        bYInc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bYIncActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        jPanel1.add(bYInc, gridBagConstraints);
+
+        bXInc.setText("x+");
+        bXInc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bXIncActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(bXInc, gridBagConstraints);
+
+        bReset.setText("0");
+        bReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bResetActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(bReset, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addComponent(bVisualize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(bVisualize, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
                 .addComponent(paneDraw, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -95,8 +170,10 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(paneDraw, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(100, 100, 100)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
                         .addComponent(bVisualize, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -107,9 +184,9 @@ public class MainForm extends javax.swing.JFrame {
     private void bVisualizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVisualizeActionPerformed
         try {
             render.display(ShapeType.getBy(listMaterials.getSelectedIndex()));
-            new Timer(25, (ActionEvent e) -> {
-                render.rotate(Integer.MIN_VALUE, 0);
-            }).start();
+            if (!timer.isRunning()) {
+                timer.start();
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.toString());
         }
@@ -133,6 +210,26 @@ public class MainForm extends javax.swing.JFrame {
         mouseY = evt.getY();
     }//GEN-LAST:event_paneDrawMousePressed
 
+    private void bYIncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bYIncActionPerformed
+        render.translate(0, -20);
+    }//GEN-LAST:event_bYIncActionPerformed
+
+    private void bYDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bYDecActionPerformed
+        render.translate(0, 20);
+    }//GEN-LAST:event_bYDecActionPerformed
+
+    private void bXIncActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bXIncActionPerformed
+        render.translate(20, 0);
+    }//GEN-LAST:event_bXIncActionPerformed
+
+    private void bXDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bXDecActionPerformed
+        render.translate(-20, 0);
+    }//GEN-LAST:event_bXDecActionPerformed
+
+    private void bResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bResetActionPerformed
+        render.resetDisplayProperties();
+    }//GEN-LAST:event_bResetActionPerformed
+
     public static void main(String args[]) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -154,7 +251,13 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bReset;
     private javax.swing.JButton bVisualize;
+    private javax.swing.JButton bXDec;
+    private javax.swing.JButton bXInc;
+    private javax.swing.JButton bYDec;
+    private javax.swing.JButton bYInc;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listMaterials;
     private javax.swing.JPanel paneDraw;

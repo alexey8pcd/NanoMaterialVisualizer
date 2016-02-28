@@ -58,4 +58,14 @@ public class BaseShape implements Shape {
         }
     }
 
+    @Override
+    public void translate(int dx, int dy) {
+        float[][] matrix = Matrix.makeIdentityMatrix();
+        matrix[3][0] = dx;
+        matrix[3][1] = dy;
+        for (GeometricPrimitive primitive : primitives) {
+            primitive.multiOnMatrix(matrix);
+        }
+    }
+
 }

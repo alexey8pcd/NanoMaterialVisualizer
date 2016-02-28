@@ -1,6 +1,7 @@
 package main.geom.primitive;
 
 import java.awt.Graphics;
+import main.geom.DisplayProperties;
 import main.geom.Vertex3F;
 
 /**
@@ -37,9 +38,9 @@ public class Primitive3D implements GeometricPrimitive {
     protected void drawEdge(int index1, int index2, Graphics graphics, int width, int height) {
         Vertex3F vertex1 = vertexes[index1];
         Vertex3F vertex2 = vertexes[index2];
-        int dx = width / 4;
+        int dx = DisplayProperties.getXPos();
         int x = (int) vertex1.getX() + dx;
-        int dy = height - height / 4;
+        int dy = DisplayProperties.getYPos();
         int y = (int) (dy - vertex1.getY());
         int x2 = (int) vertex2.getX() + dx;
         int y2 = (int) (dy - vertex2.getY());

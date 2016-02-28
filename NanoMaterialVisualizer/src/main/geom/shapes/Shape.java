@@ -18,4 +18,6 @@ public interface Shape {
 
     public void scale(double value);
 
+    public void translate(int dx, int dy);
+
 }

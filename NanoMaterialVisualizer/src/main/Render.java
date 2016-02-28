@@ -3,6 +3,7 @@ package main;
 import main.geom.shapes.ShapeLoader;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import main.geom.DisplayProperties;
 import main.geom.shapes.Shape;
 import main.geom.shapes.ShapeType;
 
@@ -17,10 +18,11 @@ public class Render {
     private final int heigth;
     private Shape shape;
 
-    Render(Graphics graphics, int width, int height) {
+    public Render(Graphics graphics, int width, int height) {
         this.graphics = graphics;
         this.heigth = height;
         this.width = width;
+        DisplayProperties.setDefaultDisplayProperties(width, height);
         buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     }
 
@@ -51,6 +53,17 @@ public class Render {
 
     public void scale(double value) {
         shape.scale(value);
+        update();
+    }
+
+    public void translate(int dx, int dy) {
+        DisplayProperties.changeXPos(dx);
+        DisplayProperties.changeYPos(dy);
+        update();
+    }
+
+    public void resetDisplayProperties() {
+        DisplayProperties.reset();
         update();
     }
 

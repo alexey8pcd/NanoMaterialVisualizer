@@ -5,20 +5,22 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import main.geom.primitive.GeometricPrimitive;
 import main.geom.Matrix;
-import main.geom.Primitive3D;
+import main.geom.primitive.Primitive3D;
 import main.geom.Vertex3F;
 
 /**
  * @author Alexey
  */
-public class Fulleren implements Shape {
+public class Fulleren extends BaseShape {
 
     private final List<Vertex3F> vertexes;
-    private List<Primitive3D> edges;
+    private static final int VERTEX_COUNT = 60;
 
     public Fulleren() {
-        vertexes = new ArrayList<>(60);
+        super();
+        vertexes = new ArrayList<>(VERTEX_COUNT);
     }
 
     public void addVertex(Vertex3F vertex3F) {
@@ -26,16 +28,16 @@ public class Fulleren implements Shape {
     }
 
     public void build() {
-        edges = new ArrayList<>();
+        primitives.clear();
         List<Vertex3F> temp = new ArrayList<>(vertexes);
         for (Iterator<Vertex3F> iterator = temp.iterator(); iterator.hasNext();) {
             Vertex3F vertex = iterator.next();
             Vertex3F n1 = findNearest(vertex);
             Vertex3F n2 = findNearest(vertex, n1);
             Vertex3F n3 = findNearest(vertex, n1, n2);
-            edges.add(createEdge(vertex, n1));
-            edges.add(createEdge(vertex, n2));
-            edges.add(createEdge(vertex, n3));
+            primitives.add(createEdge(vertex, n1));
+            primitives.add(createEdge(vertex, n2));
+            primitives.add(createEdge(vertex, n3));
             iterator.remove();
         }
     }
@@ -76,7 +78,7 @@ public class Fulleren implements Shape {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, width, height);
         graphics.setColor(Color.RED);
-        for (Primitive3D edge : edges) {
+        for (GeometricPrimitive edge : primitives) {
             edge.draw(graphics, width, height);
         }
     }

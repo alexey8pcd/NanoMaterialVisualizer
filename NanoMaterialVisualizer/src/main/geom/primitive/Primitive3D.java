@@ -1,6 +1,7 @@
-package main.geom;
+package main.geom.primitive;
 
 import java.awt.Graphics;
+import main.geom.Vertex3F;
 
 /**
  * @author Alexey

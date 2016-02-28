@@ -1,10 +1,10 @@
-package main;
+package main.cl;
 
 import java.io.File;
 import java.util.List;
 import java.nio.FloatBuffer;
 import java.util.Locale;
-import static main.UtilCL.print;
+import static main.cl.UtilCL.print;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLUtil;
 import org.lwjgl.PointerBuffer;

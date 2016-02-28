@@ -1,4 +1,4 @@
-package main.geom;
+package main.geom.primitive;
 
 import java.awt.Graphics;
 

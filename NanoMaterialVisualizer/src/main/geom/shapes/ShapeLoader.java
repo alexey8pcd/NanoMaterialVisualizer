@@ -2,24 +2,23 @@ package main.geom.shapes;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import main.geom.PrimitiveBuilder;
+import main.geom.primitive.PrimitiveBuilder;
 import main.geom.Vertex3F;
-import main.geom.shapes.Fulleren;
-import main.geom.shapes.HexagoneShape;
-import main.geom.shapes.Shape;
-import main.geom.shapes.ShapeType;
 
 /**
  * @author Alexey
  */
-public class ShapeLoader {
+public final class ShapeLoader {
+
+    private ShapeLoader() {
+
+    }
 
     private static final String[] SOURCES = {
         "nanotube.txt",
-        "raw_fulleren",
+        "fulleren.txt",
         "graphen.txt",
         "nanocrystal.txt"
     };
@@ -28,29 +27,29 @@ public class ShapeLoader {
     public static Shape loadShape(ShapeType shapeType) throws Exception {
         switch (shapeType) {
             case NANOTUBE:
-                return loadNanotube(new File(SOURCES[0]));
+                return loadHexagoneShape(new File(SOURCES[0]));
             case FULLEREN:
                 return loadFulleren(new File(SOURCES[1]));
             case GRAPHEN:
-                return loadGraphen(new File(SOURCES[2]));
+                return loadHexagoneShape(new File(SOURCES[2]));
             case NANOCRYSTAL:
-                break;
+                return loadTriangleShape(new File(SOURCES[3]));
         }
         return null;
     }
-
-    private static HexagoneShape loadNanotube(File sourceFile) throws Exception {
-        HexagoneShape nanotube;
+   
+    private static Shape loadHexagoneShape(File sourceFile) throws IOException {
+        BaseShape hexagoneShape;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile))) {
-            nanotube = new HexagoneShape();
+            hexagoneShape = new BaseShape();
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
                 if (!line.startsWith(COMMENT_PREFIX)) {
-                    nanotube.addHexagone(PrimitiveBuilder.createHexagone(line));
+                    hexagoneShape.addPrimitive(PrimitiveBuilder.createHexagone(line));
                 }
             }
         }
-        return nanotube;
+        return hexagoneShape;
     }
 
     private static Shape loadFulleren(File sourceFile) throws Exception {
@@ -78,20 +77,20 @@ public class ShapeLoader {
         float z = Float.parseFloat(coordinates[2]);
         Vertex3F vertex3F = new Vertex3F(x, y, z);
         return vertex3F;
-    }
+    }    
 
-    private static Shape loadGraphen(File sourceFile) throws IOException {
-        HexagoneShape graphen;
+    private static Shape loadTriangleShape(File sourceFile) throws IOException {
+        BaseShape crystal;
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(sourceFile))) {
-            graphen = new HexagoneShape();
+            crystal = new BaseShape();
             while (bufferedReader.ready()) {
                 String line = bufferedReader.readLine();
                 if (!line.startsWith(COMMENT_PREFIX)) {
-                    graphen.addHexagone(PrimitiveBuilder.createHexagone(line));
+                    crystal.addPrimitive(PrimitiveBuilder.createTriangle(line));
                 }
             }
         }
-        return graphen;
+        return crystal;
     }
 
 }

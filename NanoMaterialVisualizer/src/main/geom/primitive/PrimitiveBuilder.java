@@ -1,9 +1,15 @@
-package main.geom;
+package main.geom.primitive;
+
+import main.geom.Vertex3F;
 
 /**
  * @author Alexey
  */
-public abstract class PrimitiveBuilder {
+public final class PrimitiveBuilder {
+    
+    private PrimitiveBuilder(){
+        
+    }
 
     /**
      *
@@ -19,6 +25,12 @@ public abstract class PrimitiveBuilder {
     public static final GeometricPrimitive createPentagone(String coordinatesLine) {
         int vertexes = 5;
         int edges = 5;
+        return createPrimitive(coordinatesLine, edges, vertexes);
+    }
+    
+    public static final GeometricPrimitive createTriangle(String coordinatesLine){
+        int vertexes = 3;
+        int edges = 3;
         return createPrimitive(coordinatesLine, edges, vertexes);
     }
 

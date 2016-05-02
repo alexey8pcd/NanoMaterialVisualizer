@@ -1,13 +1,11 @@
 package main.geom.shapes;
 
-import java.awt.Graphics;
+import main.geom.Drawable;
 
 /**
 @author Alexey
  */
-public interface Shape {
-
-    public void draw(Graphics graphics, int width, int height);
+public interface Shape extends Drawable{
 
     /**
      *

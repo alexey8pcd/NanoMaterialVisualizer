@@ -3,7 +3,7 @@ package main.geom;
 /**
  * @author Alexey
  */
-public class Vertex3F {
+public class Vertex3F implements MatrixMultiplied{
 
     private float x;
     private float y;
@@ -33,6 +33,7 @@ public class Vertex3F {
         return z;
     }
 
+    @Override
     public void multiOnMatrix(float[][] matrix) {
         float xn = x * matrix[0][0] + y * matrix[1][0]
                 + z * matrix[2][0] + matrix[3][0];

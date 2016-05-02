@@ -1,13 +1,15 @@
 package main.geom.primitive;
 
+import main.geom.Drawable;
 import java.awt.Graphics;
 import main.geom.DisplayProperties;
+import main.geom.MatrixMultiplied;
 import main.geom.Vertex3F;
 
 /**
  * @author Alexey
  */
-public class Primitive3D implements GeometricPrimitive {
+public class Primitive3D implements Drawable, MatrixMultiplied {
 
     protected final int edgeCount;
     protected final int vertexesCount;

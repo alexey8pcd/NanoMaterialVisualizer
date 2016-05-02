@@ -65,6 +65,7 @@ public class OpenCLExample {
         CLPlatform platform = CLPlatform.getPlatforms().get(0);
         List<CLDevice> devices = platform.getDevices(CL_DEVICE_TYPE_GPU);
         CLContext context = CLContext.create(platform, devices, null, null, null);
+//        System.err.println("dev " + devices.size());
         CLCommandQueue queue = clCreateCommandQueue(context, devices.get(0), CL_QUEUE_PROFILING_ENABLE, null);
 
         // Allocate memory for our two input buffers and our result buffer
@@ -77,7 +78,7 @@ public class OpenCLExample {
 
         // Load the source from a resource file
         String source = UtilCL.getResourceAsString("D:\\Study\\ПМиКС\\"
-                + "NanoMaterialVisualizer\\NanoMaterialVisualizer\\src\\main\\resources\\cl\\sum.txt");
+                + "NanoMaterialVisualizer\\NanoMaterialVisualizer\\src\\main\\cl\\sum.txt");
 //        String source = UtilCL.getResourceAsString("cl/sum.txt");
 
         // Create our program and kernel

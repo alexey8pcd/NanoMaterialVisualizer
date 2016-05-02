@@ -4,21 +4,23 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-import main.geom.primitive.GeometricPrimitive;
 import main.geom.Matrix;
+import main.geom.MatrixMultiplied;
+import main.geom.Drawable;
+import main.geom.primitive.Primitive3D;
 
 /**
  * @author Alexey
  */
 public class BaseShape implements Shape {
 
-    protected List<GeometricPrimitive> primitives;
+    protected List<Primitive3D> primitives;
 
     public BaseShape() {
         primitives = new ArrayList<>();
     }
 
-    public void addPrimitive(GeometricPrimitive primitive) {
+    public void addPrimitive(Primitive3D primitive) {
         this.primitives.add(primitive);
     }
 
@@ -27,7 +29,7 @@ public class BaseShape implements Shape {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, width, heigth);
         graphics.setColor(Color.RED);
-        for (GeometricPrimitive primitive : primitives) {
+        for (Drawable primitive : primitives) {
             primitive.draw(graphics, width, heigth);
         }
     }
@@ -44,7 +46,7 @@ public class BaseShape implements Shape {
         dy = t;
         float[][] matrixX = Matrix.makeRotateMatrixX(dx * dx * dx);
         float[][] matrixY = Matrix.makeRotateMatrixY(dy * dy * dy);
-        for (GeometricPrimitive primitive : primitives) {
+        for (MatrixMultiplied primitive : primitives) {
             primitive.multiOnMatrix(matrixX);
             primitive.multiOnMatrix(matrixY);
         }
@@ -53,7 +55,7 @@ public class BaseShape implements Shape {
     @Override
     public void scale(double value) {
         float[][] matrix = Matrix.makeScaleMatrix(value);
-        for (GeometricPrimitive primitive : primitives) {
+        for (MatrixMultiplied primitive : primitives) {
             primitive.multiOnMatrix(matrix);
         }
     }
@@ -63,7 +65,7 @@ public class BaseShape implements Shape {
         float[][] matrix = Matrix.makeIdentityMatrix();
         matrix[3][0] = dx;
         matrix[3][1] = dy;
-        for (GeometricPrimitive primitive : primitives) {
+        for (MatrixMultiplied primitive : primitives) {
             primitive.multiOnMatrix(matrix);
         }
     }

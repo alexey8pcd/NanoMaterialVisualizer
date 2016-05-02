@@ -5,10 +5,10 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import main.geom.primitive.GeometricPrimitive;
 import main.geom.Matrix;
 import main.geom.primitive.Primitive3D;
 import main.geom.Vertex3F;
+import main.geom.Drawable;
 
 /**
  * @author Alexey
@@ -78,7 +78,7 @@ public class Fulleren extends BaseShape {
         graphics.setColor(Color.BLACK);
         graphics.fillRect(0, 0, width, height);
         graphics.setColor(Color.RED);
-        for (GeometricPrimitive edge : primitives) {
+        for (Drawable edge : primitives) {
             edge.draw(graphics, width, height);
         }
     }
